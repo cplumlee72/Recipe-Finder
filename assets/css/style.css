@@ -1,0 +1,29 @@
+body {
+    background-color: #E3D0B5;
+}
+
+.background {
+    
+}
+
+.card {
+    box-shadow: 10px 10px 5px grey;
+    border-radius: 20px
+}
+
+.card .card-image img {
+    border-radius: 20px 20px 0px 0px
+}
+
+.card .card-content {
+    border-radius: 0px 0px 20px 20px
+
+}
+.card-content {
+    background-color: #0A2239;
+    color: #f3f0ef;
+}
+
+.sidenav {
+    background-color: #282b42;
+}
