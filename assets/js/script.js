@@ -1,9 +1,53 @@
+var recipeCardImgs = (document.querySelectorAll(".randImg"));
+var recipeCardNames = document.querySelectorAll(".mealName")
+var recipeCardCat = document.querySelectorAll(".mealCat");
 
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.sidenav');
     var instances = M.Sidenav.init(elems);
+    
+
 });
 
-  var instance = M.Sidenav.getInstance(elem);
+ 
+ 
 
-  instance.open();
+  fetch('https://www.themealdb.com/api/json/v1/1/random.php')
+  .then(function (resp) {
+    return resp.json();
+  }) // Convert data to json
+  .then(function (data) {
+    console.log(data);
+    // console.log(data.meals[0].strMealThumb);
+    // console.log(data.meals[0].idMeal);
+    // console.log(data.meals[0].strCategory);
+    // console.log(data.meals[0].strMeal);
+
+    
+    var mealImg = data.meals[0].strMealThumb;
+    var mealID = data.meals[0].idMeal;
+    var mealCat = data.meals[0].strCategory;
+    var mealName = data.meals[0].strMeal;
+    
+  
+    recipeCardImgs.forEach(element => {
+      console.log(element)
+      element.setAttribute("src", mealImg);       
+    });
+
+    recipeCardNames.forEach(element => {
+      console.log(element)
+      element.textContent = mealName       
+    });
+
+    recipeCardCat.forEach(element => {
+      console.log(element)
+      element.textContent = mealCat       
+    });
+
+
+
+
+    });
+
+    
