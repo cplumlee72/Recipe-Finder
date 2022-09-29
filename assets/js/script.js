@@ -6,9 +6,11 @@ var recipeCard = document.querySelectorAll(".card");
 document.addEventListener("DOMContentLoaded", function () {
   var elems = document.querySelectorAll(".sidenav");
   var instances = M.Sidenav.init(elems);
-});
 
-fetch("https://www.themealdb.com/api/json/v1/1/random.php")
+
+
+for (let i = 0; i < recipeCard.length; i++) {
+  fetch("https://www.themealdb.com/api/json/v1/1/random.php")
   .then(function (resp) {
     return resp.json();
   }) // Convert data to json
@@ -24,29 +26,29 @@ fetch("https://www.themealdb.com/api/json/v1/1/random.php")
     var mealCat = data.meals[0].strCategory;
     var mealName = data.meals[0].strMeal;
 
-    recipeCardImgs.forEach((element) => {
-      console.log(element);
-      element.setAttribute("src", mealImg);
-    });
+    recipeCardImgs[i].setAttribute("src", mealImg);
+    recipeCardNames[i].innerHTML = mealName;
+    recipeCardCat[i].textContent = mealCat;
+    recipeCard[i].setAttribute("data-food", mealID);
+  });  
+};
 
-    recipeCardNames.forEach((element) => {
-      console.log(element);
-      element.textContent = mealName;
-    });
 
-    recipeCardCat.forEach((element) => {
-      console.log(element);
-      element.textContent = mealCat;
-    });
 
+
+  fetch("https://www.thecocktaildb.com/api/json/v1/1/random.php")
+  .then(function (resp) {
+    return resp.json();
+  }) // Convert data to json
+  .then(function (data) {
+    var drinkID = data.drinks[0].idDrink; 
     recipeCard.forEach((element) => {
-      element.setAttribute("data", mealID);
-
+      element.setAttribute("data-drink", drinkID);
       element.addEventListener("click", function (event) {
-        var currentId = event.currentTarget.getAttribute("data");
-        window.location.href = "./results.html?currentID="+currentId
+        var foodID = event.currentTarget.getAttribute("data-food");
+        var drinkID = event.currentTarget.getAttribute("data-drink");
+        window.location.href = "./results.html?currentID="+foodID+"&"+drinkID
       });
-      
     });
   });
 
@@ -59,7 +61,7 @@ fetch("https://www.themealdb.com/api/json/v1/1/random.php")
   mealSearchButton.addEventListener("click", function(event) {
     console.log(mealSearchField.value);
     var mealSearchTerm = mealSearchField.value
-    window.location.href = "./results.html?mealSearchTerm="+mealSearchTerm;
+    window.location.href = "./foodsearchres.html?SearchTerm="+mealSearchTerm
   });
 
   
@@ -67,8 +69,10 @@ fetch("https://www.themealdb.com/api/json/v1/1/random.php")
   drinkSearchButton.addEventListener("click", function(event) {
     console.log(drinkSearchField.value);
     var drinkSearchTerm = drinkSearchField.value
-    window.location.href = "./results.html?mealSearchTerm="+drinkSearchTerm;
+    window.location.href = "./drinksearchres.html?SearchTerm="+drinkSearchTerm;
   });
+
+});
 
 
   

@@ -1,14 +1,19 @@
 var foodPic = document.querySelector("#mealimg");
 var ctPic = document.querySelector("#ctimg");
-var mealID = (window.location.search.split("=")[1]);
+var searchID = (window.location.search.split("=")[1]);
+var IDArr = searchID.split("&")
+var foodID = (IDArr[0])
+var drinkID = (IDArr[1])
+console.log(IDArr)
+
 
 function getMeal () {
-  fetch("https://www.themealdb.com/api/json/v1/1/lookup.php?i=" + mealID)
+  fetch("https://www.themealdb.com/api/json/v1/1/lookup.php?i=" + foodID)
     .then (function (resp) {
       return resp.json();
     }) // Convert data to JSON
     .then (function (data) {
-      console.log(parseInt(mealID));      
+      console.log(foodID, drinkID);      
       var mealArr = data.meals[0];
       var mealImg = mealArr.strMealThumb;
       var mealName = mealArr.strMeal;
@@ -28,7 +33,7 @@ function getMeal () {
       document.querySelector("#mealingrs").appendChild(ingList);
 
       combined.forEach(element => {
-        if(element !== " " && element !== "null null"){
+        if(element !== " " && element !== "null null" && (element.includes("null") === false)){   
         console.log(element.split()) ;
         var ingItem = document.createElement("li");
         ingItem.textContent = element;
@@ -44,44 +49,47 @@ function getMeal () {
 
 
 function getCocktail () {
-  fetch("https://www.thecocktaildb.com/api/json/v1/1/random.php")
-  .then (function (resp) {
-    return resp.json();
-  }) // Convert data to JSON
-  .then (function (data) {
-    console.log(data);
-    var ctArr = data.drinks[0];
-    var ctImg = ctArr.strDrinkThumb;
-    var ctName = ctArr.strDrink;
-    var ctInstructions = ctArr.strInstructions;
-    var ctMeasures = [ctArr.strMeasure1, ctArr.strMeasure2, ctArr.strMeasure3, ctArr.strMeasure4, ctArr.strMeasure5, ctArr.strMeasure6, ctArr.strMeasure7, ctArr.strMeasure8, ctArr.strMeasure9, ctArr.strMeasure10, ctArr.strMeasure11, ctArr.strMeasure12, ctArr.strMeasure13, ctArr.strMeasure14, ctArr.strMeasure15, ctArr.strMeasure16, ctArr.strMeasure17, ctArr.strMeasure18, ctArr.strMeasure19, ctArr.strMeasure20];
-    var ctingredients = [ctArr.strIngredient1, ctArr.strIngredient2, ctArr.strIngredient3, ctArr.strIngredient4, ctArr.strIngredient5, ctArr.strIngredient6, ctArr.strIngredient7, ctArr.strIngredient8, ctArr.strIngredient9, ctArr.strIngredient10, ctArr.strIngredient11, ctArr.strIngredient12, ctArr.strIngredient13, ctArr.strIngredient14, ctArr.strIngredient15, ctArr.strIngredient16, ctArr.strIngredient17, ctArr.strIngredient18, ctArr.strIngredient19, ctArr.strIngredient20];
-    var combined = ctMeasures.map((e, i) => e + " " + ctingredients[i]);
-
-    var ctIngList = document.createElement("ul");
-    ctIngList.setAttribute("id", "inglist");
-    var ctInstructionsEl = document.createElement("p");
-    ctInstructionsEl.textContent = ctInstructions;
-    document.querySelector("#ctins").textContent = "Instructions";
-    document.querySelector("#ctins").appendChild(ctInstructionsEl);
-
-    document.querySelector("#ctingrs").textContent = "Ingredients";
-    document.querySelector("#ctingrs").appendChild(ctIngList);
-
-    combined.forEach(element => {
-      if(element !== "null null" && element !== "undefined undefined"){
-      console.log(element.split());
-      var ingItem = document.createElement("li");
-      ingItem.textContent = element;
-      ctIngList.appendChild(ingItem);
-      };
+  fetch("https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i="+drinkID)
+    .then (function (resp) {
+      return resp.json();
+    }) // Convert data to JSON
+    .then (function (data) {
+      console.log(data);
+      var ctArr = data.drinks[0];
+      var ctImg = ctArr.strDrinkThumb;
+      var ctName = ctArr.strDrink;
+      var ctInstructions = ctArr.strInstructions;
+      var ctMeasures = [ctArr.strMeasure1, ctArr.strMeasure2, ctArr.strMeasure3, ctArr.strMeasure4, ctArr.strMeasure5, ctArr.strMeasure6, ctArr.strMeasure7, ctArr.strMeasure8, ctArr.strMeasure9, ctArr.strMeasure10, ctArr.strMeasure11, ctArr.strMeasure12, ctArr.strMeasure13, ctArr.strMeasure14, ctArr.strMeasure15, ctArr.strMeasure16, ctArr.strMeasure17, ctArr.strMeasure18, ctArr.strMeasure19, ctArr.strMeasure20];
+      var ctingredients = [ctArr.strIngredient1, ctArr.strIngredient2, ctArr.strIngredient3, ctArr.strIngredient4, ctArr.strIngredient5, ctArr.strIngredient6, ctArr.strIngredient7, ctArr.strIngredient8, ctArr.strIngredient9, ctArr.strIngredient10, ctArr.strIngredient11, ctArr.strIngredient12, ctArr.strIngredient13, ctArr.strIngredient14, ctArr.strIngredient15, ctArr.strIngredient16, ctArr.strIngredient17, ctArr.strIngredient18, ctArr.strIngredient19, ctArr.strIngredient20];
+      var combined = ctMeasures.map((e, i) => e + " " + ctingredients[i]);
+  
+      var ctIngList = document.createElement("ul");
+      ctIngList.setAttribute("id", "inglist");
+      var ctInstructionsEl = document.createElement("p");
+      ctInstructionsEl.textContent = ctInstructions;
+      document.querySelector("#ctins").textContent = "Instructions";
+      document.querySelector("#ctins").appendChild(ctInstructionsEl);
+  
+      document.querySelector("#ctingrs").textContent = "Ingredients";
+      document.querySelector("#ctingrs").appendChild(ctIngList);
+  
+      combined.forEach(element => {
+        if(element.includes("undefined") === false && element !== " " && element !== "null null" && (element.includes("null") === false)){
+        console.log(element.split());
+        var ingItem = document.createElement("li");
+        ingItem.textContent = element;
+        ctIngList.appendChild(ingItem);
+        };
+      });
+      // console.log(ingredients)
+      // console.log(measures)
+      ctPic.setAttribute("src", ctImg );
+      document.querySelector("#cocktailname").textContent = ctName;
     });
-    // console.log(ingredients)
-    // console.log(measures)
-    ctPic.setAttribute("src", ctImg );
-    document.querySelector("#cocktailname").textContent = ctName;
-  });
-}
+  };
+  
+ 
+
 
 
 document.addEventListener('DOMContentLoaded', function() {    
@@ -89,18 +97,35 @@ document.addEventListener('DOMContentLoaded', function() {
     var instances = M.Sidenav.init(elems);    
     
     // var ctIngSearch = (window.location.search.split("="))
-    console.log(isNaN(mealID))
-    if (isNaN(mealID) === false) {
+    console.log(isNaN(foodID))
+    if (foodID !== "undefined") {
     getMeal();
+    };
+    if (drinkID !== "undefined") {
     getCocktail();
     };
-    
-
-    
-
-    
-
-
-
-
 });
+
+
+var mealSearchField = document.querySelector("#food-search");
+var mealSearchButton = document.querySelector("#mealsearchbutton");
+var drinkSearchField = document.querySelector("#drink-search");
+var drinkSearchButton = document.querySelector("#drinksearchbutton");
+
+
+mealSearchButton.addEventListener("click", function(event) {
+  console.log(mealSearchField.value);
+  var mealSearchTerm = mealSearchField.value
+  window.location.href = "./foodsearchres.html?SearchTerm="+mealSearchTerm
+});
+
+
+
+drinkSearchButton.addEventListener("click", function(event) {
+  console.log(drinkSearchField.value);
+  var drinkSearchTerm = drinkSearchField.value
+  window.location.href = "./drinksearchres.html?SearchTerm="+drinkSearchTerm;
+});
+
+
+
