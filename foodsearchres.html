@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./assets/css/style.css"/>
+    <title>Document</title>
+</head>
+<header class="left-align m4">
+    <div>
+    <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="fa-solid fa-bars fa-2xl"></i></a>
+    Click to Search!
+  </div>
+</header>
+<body class="container row">
+    <main></main>
+    
+    <!-- Sidenav -->
+    <ul id="slide-out" class="sidenav">
+        <li>
+          <div class="user-view">
+            <div class="background">
+              
+            </div>
+            <img class="responsive-img" src="./assets/images/logo.png" />
+          </div>
+        </li>
+        <li>
+            <input type="search" placeholder="Search by food ingredient" id="food-search" name="q">
+        </li>
+        <li><button id="mealsearchbutton">Search</button></li>
+        <li><div class="divider"></div></li>
+        <li><input type="search" placeholder="Search by cocktail ingredient" id="drink-search" name="q"></li>
+        <li><button id="drinksearchbutton">Search</button></li>
+      </ul>
+      
+      <!-- SIDENAV END  -->
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="./assets/js/foodsearchres.js"></script>
+</html>
