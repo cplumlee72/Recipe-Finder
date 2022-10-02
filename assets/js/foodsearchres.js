@@ -57,6 +57,24 @@ function getMealBySearch () {
   });
 
   
-
+  var mealSearchField = document.querySelector("#food-search");
+  var mealSearchButton = document.querySelector("#mealsearchbutton");
+  var drinkSearchField = document.querySelector("#drink-search");
+  var drinkSearchButton = document.querySelector("#drinksearchbutton");
+  
+  
+  mealSearchButton.addEventListener("click", function(event) {
+    console.log(mealSearchField.value);
+    var mealSearchTerm = mealSearchField.value
+    window.location.href = "./foodsearchres.html?SearchTerm="+mealSearchTerm
+  });
+  
+  
+  
+  drinkSearchButton.addEventListener("click", function(event) {
+    console.log(drinkSearchField.value);
+    var drinkSearchTerm = drinkSearchField.value
+    window.location.href = "./drinksearchres.html?SearchTerm="+drinkSearchTerm;
+  });
 
   
